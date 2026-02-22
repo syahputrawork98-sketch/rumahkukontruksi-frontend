@@ -45,13 +45,13 @@ Frontend platform RumahkuKonstruksi dengan arsitektur modular, design system ter
 
 ### Phase 4 - Modul Estimasi Biaya
 
-- [ ] Form estimasi modular dan tervalidasi.
-- [ ] Summary + breakdown hasil estimasi.
-- [ ] Submit flow dengan state feedback lengkap.
+- [x] Form estimasi modular dan tervalidasi.
+- [x] Summary + breakdown hasil estimasi.
+- [x] Submit flow dengan state feedback lengkap.
 
 ### Phase 5 - Auth UI & API Ready
 
-- [ ] Login/register/logout terintegrasi service API. (register endpoint backend belum tersedia di OpenAPI)
+- [x] Login/register/logout terintegrasi service API. (register endpoint backend opsional: jika belum tersedia, frontend mengembalikan NOT_IMPLEMENTED secara terstruktur)
 - [x] Session flow (token + refresh + me endpoint) siap.
 - [x] Error mapping HTTP + error code konsisten.
 

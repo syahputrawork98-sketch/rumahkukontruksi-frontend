@@ -20,6 +20,11 @@ export const PROTECTED_ROUTE_RULES: RoleNavItem[] = [
     roles: [ROLES.owner, ROLES.admin, ROLES.kontraktor, ROLES.user],
   },
   {
+    href: ROUTES.estimasi,
+    label: "Estimasi",
+    roles: [ROLES.owner, ROLES.admin, ROLES.kontraktor, ROLES.user],
+  },
+  {
     href: ROUTES.contracts,
     label: "Contracts",
     roles: [ROLES.owner, ROLES.admin, ROLES.kontraktor],

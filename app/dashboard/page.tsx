@@ -76,7 +76,7 @@ export default function DashboardPage() {
           <EmptyState
             title="Belum Ada Data Proyek"
             message="Saat ini belum ada proyek pada filter aktif. Ubah filter atau buat proyek baru."
-            action={<Button size="sm">Tambah Proyek</Button>}
+            action={<a href="/estimasi"><Button size="sm">Buka Estimasi</Button></a>}
           />
         </div>
 
@@ -88,3 +88,4 @@ export default function DashboardPage() {
     </section>
   );
 }
+

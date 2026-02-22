@@ -8,10 +8,20 @@ type LoginPayload = {
   password: string;
 };
 
+type RegisterPayload = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 type LoginResponse = {
   message?: string;
   accessToken?: string;
   refreshToken?: string;
+};
+
+type RegisterResponse = {
+  message?: string;
 };
 
 type AuthApiError = {
@@ -122,6 +132,37 @@ export const authService = {
           : undefined,
       user,
       role: mapRoleFromApi(user.roles),
+    };
+  },
+
+  async register(payload: RegisterPayload): Promise<RegisterResponse> {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      cache: "no-store",
+    });
+
+    const body = await parseJsonSafe<RegisterResponse | unknown>(response);
+
+    if (!response.ok) {
+      if (response.status === 404 || response.status === 405 || response.status === 501) {
+        throw {
+          code: "NOT_IMPLEMENTED",
+          message: "Endpoint register belum tersedia di backend API saat ini.",
+        } satisfies AuthApiError;
+      }
+
+      throw parseAuthError(body, "Register failed.");
+    }
+
+    return {
+      message:
+        typeof body === "object" && body !== null && "message" in body
+          ? String((body as RegisterResponse).message ?? "Register successful")
+          : "Register successful",
     };
   },
 
