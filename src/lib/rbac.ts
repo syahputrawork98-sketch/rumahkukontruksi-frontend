@@ -15,6 +15,11 @@ export const PROTECTED_ROUTE_RULES: RoleNavItem[] = [
     roles: [ROLES.owner, ROLES.admin, ROLES.kontraktor, ROLES.user],
   },
   {
+    href: ROUTES.admin,
+    label: "Admin",
+    roles: [ROLES.owner, ROLES.admin],
+  },
+  {
     href: ROUTES.projects,
     label: "Projects",
     roles: [ROLES.owner, ROLES.admin, ROLES.kontraktor, ROLES.user],
@@ -68,4 +73,8 @@ export function hasRouteAccess(pathname: string, role: UserRole): boolean {
 
 export function getNavItemsForRole(role: UserRole): RoleNavItem[] {
   return PROTECTED_ROUTE_RULES.filter((item) => item.roles.includes(role));
+}
+
+export function canManageAdminActions(role: UserRole): boolean {
+  return role === ROLES.owner || role === ROLES.admin;
 }

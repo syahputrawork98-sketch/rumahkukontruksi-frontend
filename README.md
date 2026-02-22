@@ -62,8 +62,8 @@ Frontend platform RumahkuKonstruksi dengan arsitektur modular, design system ter
 
 ### Phase 7 - Admin Panel
 
-- [ ] User management, monitoring, approval flow siap.
-- [ ] Permission enforcement konsisten di semua action.
+- [x] User management, monitoring, approval flow siap.
+- [x] Permission enforcement konsisten di semua action.
 
 ### Phase 8 - AI Integration
 
