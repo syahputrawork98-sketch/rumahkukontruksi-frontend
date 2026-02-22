@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { cn } from "@/lib/cn";
 
 export type TextFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -8,63 +8,42 @@ export type TextFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   size?: "sm" | "md" | "lg";
 };
 
+const sizeClasses: Record<NonNullable<TextFieldProps["size"]>, string> = {
+  sm: "h-8 px-3 text-sm",
+  md: "h-10 px-4 text-sm",
+  lg: "h-12 px-4 text-base",
+};
+
 export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
-  (
-    {
-      className,
-      label,
-      hint,
-      error,
-      size = "md",
-      disabled,
-      ...props
-    },
-    ref
-  ) => {
-    const isError = !!error;
-    const hasLabel = !!label;
-    const hasHint = !!hint && !isError;
-
-    const sizeClasses: Record<string, string> = {
-      sm: "h-8 px-2 text-sm",
-      md: "h-10 px-3 text-base",
-      lg: "h-12 px-4 text-lg",
-    };
-
-    const borderColors = isError
-      ? "border-red-500 dark:border-red-400 focus:ring-red-500"
-      : "border-zinc-300 dark:border-zinc-600 focus:ring-blue-500";
+  ({ className, label, hint, error, size = "md", disabled, id, ...props }, ref) => {
+    const isError = Boolean(error);
+    const hasHint = Boolean(hint) && !isError;
+    const generatedId = React.useId();
+    const inputId = id ?? generatedId;
 
     return (
       <div className="w-full">
-        {hasLabel && (
-          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+        {label && (
+          <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-[var(--color-text-primary)]">
             {label}
           </label>
         )}
         <input
           ref={ref}
+          id={inputId}
           disabled={disabled}
           className={cn(
-            "w-full rounded-lg border bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors",
-            "focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-zinc-950",
+            "w-full rounded-[var(--radius-md)] border bg-[var(--color-surface)] text-[var(--color-text-primary)] transition-colors",
+            "placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 focus:ring-offset-[var(--color-background)]",
             sizeClasses[size],
-            borderColors,
-            disabled && "opacity-50 cursor-not-allowed bg-zinc-50 dark:bg-zinc-900",
+            isError ? "border-[var(--color-danger)]" : "border-[var(--color-border)]",
+            disabled && "cursor-not-allowed bg-[var(--color-surface-secondary)] text-[var(--color-text-muted)]",
             className
           )}
           {...props}
         />
-        {hasHint && (
-          <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
-            {hint}
-          </p>
-        )}
-        {isError && (
-          <p className="text-xs text-red-600 dark:text-red-400 mt-1">
-            {error}
-          </p>
-        )}
+        {hasHint && <p className="mt-1 text-xs text-[var(--color-text-muted)]">{hint}</p>}
+        {isError && <p className="mt-1 text-xs text-[var(--color-danger)]">{error}</p>}
       </div>
     );
   }

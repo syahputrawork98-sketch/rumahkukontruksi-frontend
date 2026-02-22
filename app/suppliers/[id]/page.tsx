@@ -1,8 +1,17 @@
+﻿import type { Metadata } from "next";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Container } from "@/components/layout/container";
 import { ErrorState } from "@/components/error-state";
-import { api, authHeaders } from "@/lib/api";
+import { getServerAuthHeaders } from "@/lib/auth-server";
+import { api } from "@/lib/api";
 
 type PageProps = {
   params: { id: string };
+};
+
+export const metadata: Metadata = {
+  title: "Supplier Detail",
+  description: "Detail supplier untuk kolaborasi vendor dan proses pengadaan.",
 };
 
 function getErrorMessage(err: unknown): string {
@@ -18,28 +27,35 @@ export default async function SupplierDetailPage({ params }: PageProps) {
     .get("/suppliers/{id}", {
       path: { id: params.id },
       headers: {
-        ...authHeaders("dummy"),
+        ...(await getServerAuthHeaders()),
         Prefer: "example=sample",
       },
     })
     .then((supplier) => ({ supplier, error: null as string | null }))
     .catch((err: unknown) => ({ supplier: null, error: getErrorMessage(err) }));
 
-  if (result.error) {
-    return (
-      <main style={{ padding: 24 }}>
-        <h1>Supplier Detail</h1>
-        <ErrorState message={result.error} />
-      </main>
-    );
-  }
-
   return (
-    <main style={{ padding: 24 }}>
-      <h1>Supplier Detail</h1>
-      <p>ID: {result.supplier?.id}</p>
-      <p>Name: {result.supplier?.name}</p>
-      <p>Email: {result.supplier?.contactEmail}</p>
+    <main className="bg-[var(--color-background)] py-12">
+      <Container className="space-y-6">
+        <h1 className="text-3xl font-semibold text-[var(--color-text-primary)]">Supplier Detail</h1>
+
+        {result.error ? (
+          <ErrorState message={result.error} />
+        ) : (
+          <Card variant="bordered">
+            <CardHeader>
+              <CardTitle>{result.supplier?.name ?? "Supplier"}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm text-[var(--color-text-secondary)]">
+              <p>ID: {result.supplier?.id}</p>
+              <p>Name: {result.supplier?.name}</p>
+              <p>Email: {result.supplier?.contactEmail}</p>
+            </CardContent>
+          </Card>
+        )}
+      </Container>
     </main>
   );
 }
+
+

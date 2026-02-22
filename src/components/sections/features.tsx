@@ -1,35 +1,34 @@
-// src/components/sections/features.tsx
-import { Container } from "@/components/layout/container";
+﻿import { Container } from "@/components/layout/container";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const FEATURES = [
   {
-    title: "Struktur Rapi",
-    desc: "Folder dipisah untuk UI, layout, dan sections agar tim mudah scaling.",
+    title: "Arsitektur Modular",
+    desc: "Struktur folder berbasis domain untuk memisahkan UI, logic fitur, dan integrasi API.",
   },
   {
-    title: "UI Kit Dasar",
-    desc: "Button dan Input siap pakai, konsisten dengan Tailwind.",
+    title: "Design System Konsisten",
+    desc: "Semantic token untuk warna, tipografi, spacing, dan komponen dasar lintas halaman.",
   },
   {
-    title: "Alias Import",
-    desc: "Gunakan `@/` supaya import bersih dan mudah dibaca.",
+    title: "API Contract Ready",
+    desc: "Frontend disiapkan untuk envelope response, mapping state, dan workflow process state.",
   },
 ];
 
 export function Features() {
   return (
-    <section className="border-t border-zinc-100 bg-white">
+    <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
       <Container className="py-20">
-        <h2 className="text-2xl font-semibold">Fitur Utama</h2>
+        <h2 className="text-2xl font-semibold text-[var(--color-text-primary)]">Fondasi Utama</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {FEATURES.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl border border-zinc-100 bg-zinc-50 p-6"
-            >
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="mt-2 text-sm text-zinc-600">{item.desc}</p>
-            </div>
+            <Card key={item.title} variant="bordered" padding="md" className="bg-[var(--color-surface-secondary)]">
+              <CardHeader>
+                <CardTitle className="text-lg">{item.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm text-[var(--color-text-secondary)]">{item.desc}</CardContent>
+            </Card>
           ))}
         </div>
       </Container>

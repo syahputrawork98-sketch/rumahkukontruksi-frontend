@@ -1,35 +1,22 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { cn } from "@/lib/cn";
 
-type BadgeVariant =
-  | "default"
-  | "success"
-  | "warning"
-  | "error"
-  | "info"
-  | "secondary";
-
+type BadgeVariant = "default" | "success" | "warning" | "error" | "info" | "secondary";
 type BadgeSize = "sm" | "md" | "lg";
 
 const variantClasses: Record<BadgeVariant, string> = {
-  default:
-    "bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100",
-  success:
-    "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100",
-  warning:
-    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100",
-  error:
-    "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100",
-  info:
-    "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
-  secondary:
-    "bg-zinc-100 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-200",
+  default: "bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)]",
+  success: "bg-[var(--color-success)]/15 text-[var(--color-success)]",
+  warning: "bg-[var(--color-warning)]/15 text-[var(--color-warning)]",
+  error: "bg-[var(--color-danger)]/15 text-[var(--color-danger)]",
+  info: "bg-[var(--color-info)]/15 text-[var(--color-info)]",
+  secondary: "bg-[var(--color-background)] text-[var(--color-text-secondary)] border border-[var(--color-border)]",
 };
 
 const sizeClasses: Record<BadgeSize, string> = {
-  sm: "px-2 py-0.5 text-xs font-medium",
-  md: "px-3 py-1 text-sm font-medium",
-  lg: "px-4 py-1.5 text-base font-medium",
+  sm: "px-2 py-0.5 text-xs font-medium rounded-[var(--radius-sm)]",
+  md: "px-3 py-1 text-sm font-medium rounded-[var(--radius-md)]",
+  lg: "px-4 py-1.5 text-base font-medium rounded-[var(--radius-md)]",
 };
 
 export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
@@ -42,12 +29,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     return (
       <span
         ref={ref}
-        className={cn(
-          "inline-flex items-center justify-center rounded-full whitespace-nowrap",
-          variantClasses[variant],
-          sizeClasses[size],
-          className
-        )}
+        className={cn("inline-flex items-center justify-center whitespace-nowrap", variantClasses[variant], sizeClasses[size], className)}
         {...props}
       />
     );

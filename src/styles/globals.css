@@ -1,54 +1,152 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
+@import "./variables.css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
   color-scheme: light;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: #f8fafa;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f1f4f4;
+  --color-overlay: rgba(30, 42, 42, 0.55);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    color-scheme: dark;
-  }
-}
+  --color-text-primary: #1e2a2a;
+  --color-text-secondary: #5f6f6f;
+  --color-text-muted: #7a8a8a;
+  --color-text-inverse: #ffffff;
 
-/* Dark mode toggle support */
-[data-theme="light"] {
-  --background: #ffffff;
-  --foreground: #171717;
-  color-scheme: light;
+  --color-border: #e5eaea;
+  --color-divider: #f1f4f4;
+
+  --color-primary: #1fa3a3;
+  --color-primary-hover: #178d8d;
+  --color-primary-active: #127575;
+  --color-primary-disabled: #d0d8d8;
+
+  --color-success: #217a4b;
+  --color-warning: #9b6a00;
+  --color-danger: #b03a3a;
+  --color-danger-hover: #972f2f;
+  --color-danger-active: #7d2525;
+  --color-info: #2e6fb5;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  --shadow-1: 0 1px 2px rgba(30, 42, 42, 0.08);
+  --shadow-2: 0 8px 24px rgba(30, 42, 42, 0.12);
+  --shadow-3: 0 16px 42px rgba(30, 42, 42, 0.18);
+
+  --font-sans: var(--font-inter);
 }
 
 [data-theme="dark"] {
-  --background: #0a0a0a;
-  --foreground: #ededed;
   color-scheme: dark;
+
+  --color-background: #0f2e2e;
+  --color-surface: #123737;
+  --color-surface-secondary: #164444;
+  --color-overlay: rgba(2, 12, 12, 0.6);
+
+  --color-text-primary: #e6f4f4;
+  --color-text-secondary: #a7caca;
+  --color-text-muted: #7faaaa;
+  --color-text-inverse: #0f2e2e;
+
+  --color-border: #1e4a4a;
+  --color-divider: #1a3f3f;
+
+  --color-primary: #29b6b6;
+  --color-primary-hover: #3ccccc;
+  --color-primary-active: #1fa3a3;
+  --color-primary-disabled: #355e5e;
+
+  --color-success: #3fa774;
+  --color-warning: #d3a748;
+  --color-danger: #d06f6f;
+  --color-danger-hover: #c65b5b;
+  --color-danger-active: #b84b4b;
+  --color-info: #70a7e2;
+
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 10px 28px rgba(0, 0, 0, 0.32);
+  --shadow-3: 0 18px 48px rgba(0, 0, 0, 0.42);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-background: #0f2e2e;
+    --color-surface: #123737;
+    --color-surface-secondary: #164444;
+    --color-overlay: rgba(2, 12, 12, 0.6);
+
+    --color-text-primary: #e6f4f4;
+    --color-text-secondary: #a7caca;
+    --color-text-muted: #7faaaa;
+    --color-text-inverse: #0f2e2e;
+
+    --color-border: #1e4a4a;
+    --color-divider: #1a3f3f;
+
+    --color-primary: #29b6b6;
+    --color-primary-hover: #3ccccc;
+    --color-primary-active: #1fa3a3;
+    --color-primary-disabled: #355e5e;
+
+    --color-success: #3fa774;
+    --color-warning: #d3a748;
+    --color-danger: #d06f6f;
+    --color-danger-hover: #c65b5b;
+    --color-danger-active: #b84b4b;
+    --color-info: #70a7e2;
+  }
 }
 
 @layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    margin: 0;
+    background: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
     text-rendering: optimizeLegibility;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  h1, h2, h3, h4 {
+  h1 {
+    font-size: 32px;
+    line-height: 1.3;
+    font-weight: 700;
     letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  h3 {
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 600;
   }
 
   a {
@@ -58,93 +156,12 @@
 }
 
 @layer utilities {
-  /* Smooth transitions */
   .transition-theme {
-    @apply transition-colors duration-300 ease-in-out;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
 
-  /* Animations */
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-in-from-top {
-    from {
-      transform: translateY(-10px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slide-in-from-bottom {
-    from {
-      transform: translateY(10px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes pulse-subtle {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.7;
-    }
-  }
-
-  .animate-fade-in {
-    animation: fade-in 0.3s ease-in-out;
-  }
-
-  .animate-slide-in-top {
-    animation: slide-in-from-top 0.3s ease-out;
-  }
-
-  .animate-slide-in-bottom {
-    animation: slide-in-from-bottom 0.3s ease-out;
-  }
-
-  .animate-pulse-subtle {
-    animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
-  /* Text utilities */
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .text-pretty {
-    text-wrap: pretty;
-  }
-
-  /* Scrollbar customization */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Focus visible states */
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-950;
-  }
-
-  .focus-ring-sm {
-    @apply focus:outline-none focus:ring-1 focus:ring-blue-500;
+    outline: none;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 45%, transparent);
   }
 }

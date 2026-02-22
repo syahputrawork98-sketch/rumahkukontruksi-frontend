@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { cn } from "@/lib/cn";
 
 export type ModalProps = {
@@ -10,7 +10,7 @@ export type ModalProps = {
   closeButton?: boolean;
 };
 
-const sizeClasses: Record<string, string> = {
+const sizeClasses: Record<NonNullable<ModalProps["size"]>, string> = {
   sm: "max-w-sm",
   md: "max-w-md",
   lg: "max-w-lg",
@@ -18,23 +18,9 @@ const sizeClasses: Record<string, string> = {
 };
 
 export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
-  (
-    {
-      open,
-      onOpenChange,
-      title,
-      children,
-      size = "md",
-      closeButton = true,
-    },
-    ref
-  ) => {
+  ({ open, onOpenChange, title, children, size = "md", closeButton = true }, ref) => {
     React.useEffect(() => {
-      if (open) {
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.overflow = "unset";
-      }
+      document.body.style.overflow = open ? "hidden" : "unset";
       return () => {
         document.body.style.overflow = "unset";
       };
@@ -44,56 +30,38 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
 
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center">
-        {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/50 dark:bg-black/70"
+          className="absolute inset-0 bg-[var(--color-overlay)]"
           onClick={() => onOpenChange(false)}
           aria-hidden="true"
         />
 
-        {/* Modal Content */}
         <div
           ref={ref}
+          role="dialog"
+          aria-modal="true"
           className={cn(
-            "relative z-10 w-full bg-white dark:bg-zinc-950 rounded-lg shadow-lg dark:shadow-2xl p-6",
-            sizeClasses[size],
-            "mx-4 max-h-[90vh] overflow-y-auto"
+            "relative z-10 mx-4 max-h-[90vh] w-full overflow-y-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-[var(--color-text-primary)] shadow-[var(--shadow-2)]",
+            sizeClasses[size]
           )}
         >
-          {/* Header */}
-          <div className="flex items-start justify-between mb-4">
-            {title && (
-              <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
-                {title}
-              </h2>
-            )}
+          <div className="mb-4 flex items-start justify-between gap-3">
+            {title && <h2 className="text-xl font-semibold">{title}</h2>}
             {closeButton && (
               <button
+                type="button"
                 onClick={() => onOpenChange(false)}
-                className="ml-auto text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
+                className="rounded-[var(--radius-sm)] p-1 text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-secondary)] hover:text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                 aria-label="Close modal"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             )}
           </div>
 
-          {/* Content */}
-          <div className="text-zinc-700 dark:text-zinc-300">
-            {children}
-          </div>
+          <div className="text-[var(--color-text-secondary)]">{children}</div>
         </div>
       </div>
     );
@@ -102,16 +70,11 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
 
 Modal.displayName = "Modal";
 
-// Compound components untuk struktur yang lebih baik
 export const ModalHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-2", className)}
-    {...props}
-  />
+  <div ref={ref} className={cn("flex flex-col gap-2", className)} {...props} />
 ));
 
 ModalHeader.displayName = "ModalHeader";
@@ -120,11 +83,7 @@ export const ModalBody = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("py-4", className)}
-    {...props}
-  />
+  <div ref={ref} className={cn("py-4", className)} {...props} />
 ));
 
 ModalBody.displayName = "ModalBody";
@@ -135,7 +94,10 @@ export const ModalFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center justify-end gap-2 pt-4 border-t border-zinc-200 dark:border-zinc-800", className)}
+    className={cn(
+      "flex items-center justify-end gap-2 border-t border-[var(--color-border)] pt-4",
+      className
+    )}
     {...props}
   />
 ));
