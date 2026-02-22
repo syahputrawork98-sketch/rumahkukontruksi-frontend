@@ -9,12 +9,15 @@ import { Button } from "@/components/ui/button";
 const QUICK_LINKS = [
   { href: "/projects", label: "Projects" },
   { href: "/estimasi", label: "Estimasi" },
+  { href: "/marketplace", label: "Marketplace" },
   { href: "/contracts", label: "Contracts" },
   { href: "/clients", label: "Clients" },
   { href: "/suppliers", label: "Suppliers" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/showcase", label: "Showcase" },
 ];
+
+const ROLE_BUTTONS = ["OWNER", "ADMIN", "KONTRAKTOR", "USER"] as const;
 
 type HomePageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -40,13 +43,30 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             <CardHeader>
               <CardTitle>Akses Sistem</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-wrap gap-3">
-              <Link href={`/login?next=${encodeURIComponent(nextPath)}`}>
-                <Button>Masuk ke Dashboard</Button>
-              </Link>
-              <Link href="/register">
-                <Button variant="secondary">Daftar Akun</Button>
-              </Link>
+            <CardContent className="space-y-4">
+              <div className="flex flex-wrap gap-3">
+                <Link href={`/login?next=${encodeURIComponent(nextPath)}`}>
+                  <Button>Masuk ke Dashboard</Button>
+                </Link>
+                <Link href="/register">
+                  <Button variant="secondary">Daftar Akun</Button>
+                </Link>
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-xs font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+                  Demo Role (quick access)
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {ROLE_BUTTONS.map((role) => (
+                    <a key={role} href={`/api/auth/demo?role=${role}&next=/dashboard`}>
+                      <Button size="sm" variant="tertiary">
+                        Masuk sebagai {role}
+                      </Button>
+                    </a>
+                  ))}
+                </div>
+              </div>
             </CardContent>
           </Card>
 

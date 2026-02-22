@@ -57,8 +57,8 @@ Frontend platform RumahkuKonstruksi dengan arsitektur modular, design system ter
 
 ### Phase 6 - Marketplace Module
 
-- [ ] Listing, detail, filter, dan proposal UI siap.
-- [ ] State list/detail lengkap untuk semua skenario.
+- [x] Listing, detail, filter, dan proposal UI siap.
+- [x] State list/detail lengkap untuk semua skenario.
 
 ### Phase 7 - Admin Panel
 
